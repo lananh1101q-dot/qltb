@@ -14,46 +14,73 @@ public class trangchu extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        // ===== MENU =====
+        // ================= MENU =================
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menuHeThong = new JMenu("Hệ thống");
         JMenuItem mTrangChu = new JMenuItem("Trang chủ");
         JMenuItem mQLTB = new JMenuItem("Quản lý thiết bị");
+        JMenuItem mPhieuMuon = new JMenuItem("Phiếu mượn");
+        JMenuItem mPhong = new JMenuItem("Quản lý phòng");
 
         menuHeThong.add(mTrangChu);
         menuHeThong.add(mQLTB);
-        menuBar.add(menuHeThong);
+        menuHeThong.add(mPhieuMuon);
+        menuHeThong.add(mPhong);
 
+        menuBar.add(menuHeThong);
         setJMenuBar(menuBar);
 
-        // ===== CARDLAYOUT =====
+        // ================= CARDLAYOUT =================
         cardLayout = new CardLayout();
         panelChinh = new JPanel(cardLayout);
 
-        // Trang chào
+        // ===== Trang chủ =====
         JPanel panelHome = new JPanel(new BorderLayout());
-        JLabel lbl = new JLabel("TRANG CHỦ HỆ THỐNG", JLabel.CENTER);
-        lbl.setFont(new Font("Arial", Font.BOLD, 26));
-        panelHome.add(lbl, BorderLayout.CENTER);
+        JLabel lblHome = new JLabel("TRANG CHỦ HỆ THỐNG", JLabel.CENTER);
+        lblHome.setFont(new Font("Arial", Font.BOLD, 26));
+        panelHome.add(lblHome, BorderLayout.CENTER);
 
-        // Màn hình quản lý thiết bị
-        qltb_view panelQLTB = new qltb_view();
+        // ===== Các màn hình =====
+        qltb_view panelQLTB = new qltb_view();      // ĐÃ là JPanel
+        JPanel panelPhieuMuon = taoPanelTam("PHIẾU MƯỢN");
+        JPanel panelPhong = taoPanelTam("QUẢN LÝ PHÒNG");
 
         panelChinh.add(panelHome, "HOME");
         panelChinh.add(panelQLTB, "QLTB");
+        panelChinh.add(panelPhieuMuon, "PHIEUMUON");
+        panelChinh.add(panelPhong, "PHONG");
 
-        add(panelChinh);
+        add(panelChinh, BorderLayout.CENTER);
 
-        // ===== SỰ KIỆN MENU =====
+        // ================= SỰ KIỆN MENU =================
         mTrangChu.addActionListener(e ->
                 cardLayout.show(panelChinh, "HOME"));
 
         mQLTB.addActionListener(e ->
                 cardLayout.show(panelChinh, "QLTB"));
+
+        mPhieuMuon.addActionListener(e ->
+                cardLayout.show(panelChinh, "PHIEUMUON"));
+
+        mPhong.addActionListener(e ->
+                cardLayout.show(panelChinh, "PHONG"));
+
+        // Mặc định
+        cardLayout.show(panelChinh, "HOME");
+    }
+
+    // Panel tạm (placeholder)
+    private JPanel taoPanelTam(String title) {
+        JPanel p = new JPanel(new BorderLayout());
+        JLabel l = new JLabel(title, JLabel.CENTER);
+        l.setFont(new Font("Arial", Font.BOLD, 22));
+        p.add(l, BorderLayout.CENTER);
+        return p;
     }
 
     public static void main(String[] args) {
-        new trangchu().setVisible(true);
+        SwingUtilities.invokeLater(() ->
+                new trangchu().setVisible(true));
     }
 }
