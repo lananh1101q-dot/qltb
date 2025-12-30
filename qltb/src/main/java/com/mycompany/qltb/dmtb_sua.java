@@ -33,7 +33,7 @@ public class dmtb_sua extends JFrame {
 
     // Đây là trường dữ liệu (field) kiểu qltb_view, tên là parent
     // Dùng để lưu tham chiếu đến cửa sổ cha (danh sách chính) để sau khi thêm xong có thể reload dữ liệu
-    private qltb_view parent;
+    private qltb_dieukhien parent;
     private dmtb_thuoctinh dm;
     public JTextField txtId = new JTextField();
     public JTextField txtHoten = new JTextField();
@@ -50,7 +50,7 @@ public class dmtb_sua extends JFrame {
 
     // Đây là constructor có tham số
     // Nhận vào cửa sổ cha (parent) để sau này có thể gọi loadData() từ cửa sổ cha
-    public dmtb_sua(qltb_view parent, dmtb_thuoctinh dm) {
+    public dmtb_sua(qltb_dieukhien parent, dmtb_thuoctinh dm) {
         this.parent = parent;  // Gán parent từ tham số vào trường dữ liệu
         this.dm=dm;
         // ===== Cấu hình Frame (cửa sổ) =====
@@ -93,7 +93,10 @@ public class dmtb_sua extends JFrame {
             dm.setTenloai(ten);
             if (dao.update(dm)) {
                 JOptionPane.showMessageDialog(this, "Sửa danh mục thành công!");
-                if (parent != null) parent.loadDanhMuc();
+                if (parent != null){ 
+                    parent.loadDanhMuc();
+                    parent.loadThietBi();
+                }
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Sửa thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);

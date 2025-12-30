@@ -34,7 +34,7 @@ public class db {
     public db() {
         host = "localhost";
         port = "3306";
-        dbName = "qltb_thpt";
+        dbName = "kk";
         url = "jdbc:mysql://" + host + ":" + port + "/" + dbName
                 + "?useSSL=false&serverTimezone=UTC";
         userName = "root";
