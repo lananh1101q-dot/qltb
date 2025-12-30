@@ -13,20 +13,17 @@ import javax.swing.*;
 
 public class menu {
 
-    public static JMenuBar createMainMenuBar(Runnable onNhapFile, Runnable onXuatFileTB, Runnable onLapPhieuMuon, Runnable onXuatPhieuMuon,
+    public static JMenuBar createMainMenuBar( Runnable onLapPhieuMuon, Runnable onXuatPhieuMuon,
                                              Runnable onOpenSinhVien, Runnable onOpenPhong, Runnable onOpenLopTinChi) {
         JMenuBar bar = new JMenuBar();
 
         // 1. Menu "Quản lý thiết bị" (Code cũ OK)
         JMenu menuQuanLyTB = new JMenu("Quản lý thiết bị");
-        JMenuItem itemNhapFile = new JMenuItem("Nhập file");
-        JMenuItem itemXuatFile = new JMenuItem("Xuất file");
+       
 
-        itemNhapFile.addActionListener(e -> onNhapFile.run());
-        itemXuatFile.addActionListener(e -> onXuatFileTB.run());
+    
 
-        menuQuanLyTB.add(itemNhapFile);
-        menuQuanLyTB.add(itemXuatFile);
+       
 
         // 2. Menu "Phiếu mượn" (Code cũ OK)
         JMenu menuPhieuMuon = new JMenu("Phiếu mượn");
