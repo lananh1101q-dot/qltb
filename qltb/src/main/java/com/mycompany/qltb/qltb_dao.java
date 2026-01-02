@@ -163,4 +163,56 @@ public class qltb_dao {
         } catch (Exception e) { e.printStackTrace(); }
         return list;
     }
+     public List<qltb_thuoctinh> searchma(String key, String maLop) {
+        List<qltb_thuoctinh> list = new ArrayList<>();
+        String sql = "SELECT tb.matbi, tb.tentbi, lt.tenloai, tt.tentinhtrang, tb.soluong_tot, tb.soluong_hong " +
+                     "FROM thietbi tb " +
+                     "JOIN loaitb lt ON tb.maloai = lt.maloai " +
+                     "JOIN trangthai tt ON tb.trangthai = tt.matinhtrang " +
+                     "WHERE (tb.matbi LIKE ? OR tb.tentbi LIKE ?) and tb.maloai = ?";
+
+        try (Connection c = new db().getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+             ps.setString(1, "%" + key + "%");
+            ps.setString(2, "%" + key + "%");
+            ps.setString(3, maLop);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                qltb_thuoctinh tb = new qltb_thuoctinh();
+                tb.setMaTB(rs.getString("matbi"));
+                tb.setTenTB(rs.getString("tentbi"));
+                tb.settenLoai(rs.getString("tenloai"));
+                tb.settenTrangThai(rs.getString("tentinhtrang"));
+                tb.setSoLuongTot(rs.getInt("soluong_tot")); // Lấy số lượng tốt
+                tb.setSoLuongHong(rs.getInt("soluong_hong")); // Lấy số lượng hỏng
+                list.add(tb);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+}
+      public List<qltb_thuoctinh> search(String key) {
+        List<qltb_thuoctinh> list = new ArrayList<>();
+        String sql = "SELECT tb.matbi, tb.tentbi, lt.tenloai, tt.tentinhtrang, tb.soluong_tot, tb.soluong_hong " +
+                     "FROM thietbi tb " +
+                     "JOIN loaitb lt ON tb.maloai = lt.maloai " +
+                     "JOIN trangthai tt ON tb.trangthai = tt.matinhtrang " +
+                     "WHERE tb.matbi LIKE ? OR tb.tentbi LIKE ?";
+
+        try (Connection c = new db().getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+             ps.setString(1, "%" + key + "%");
+            ps.setString(2, "%" + key + "%");
+            
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                qltb_thuoctinh tb = new qltb_thuoctinh();
+                tb.setMaTB(rs.getString("matbi"));
+                tb.setTenTB(rs.getString("tentbi"));
+                tb.settenLoai(rs.getString("tenloai"));
+                tb.settenTrangThai(rs.getString("tentinhtrang"));
+                tb.setSoLuongTot(rs.getInt("soluong_tot")); // Lấy số lượng tốt
+                tb.setSoLuongHong(rs.getInt("soluong_hong")); // Lấy số lượng hỏng
+                list.add(tb);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+}
 }

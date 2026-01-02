@@ -6,6 +6,8 @@ import javax.swing.*;
 public class qltb_dieukhien {
 
     private qltb_view view;
+    private String maLoaiDangChon = null;
+
 
     public qltb_dieukhien(qltb_view view) {
         this.view = view;
@@ -18,6 +20,7 @@ public class qltb_dieukhien {
     }
 
     public void init() {
+        
 
         // Click danh mục
         view.listDanhMuc.addListSelectionListener(e -> {
@@ -37,9 +40,11 @@ public class qltb_dieukhien {
 
         // Thêm mới
         view.btnthem.addActionListener(e -> themTB());
-        view.btnthem.addActionListener(e -> clearForm());
+        view.btnlammoi.addActionListener(e -> clearForm());
         view.btnsua.addActionListener(e -> suaTB());
         view.btnxoa.addActionListener(e -> xoaTB());
+        view.btntk.addActionListener(e -> timThietBi()
+        );
         
     }
 
@@ -102,8 +107,10 @@ public class qltb_dieukhien {
     public void showDataFromTable(int row) {
         view.txtId.setText(view.tableSp.getValueAt(row, 0).toString());
         view.txtName.setText(view.tableSp.getValueAt(row, 1).toString());
-        view.txtSoLuongTot.setText(view.tableSp.getValueAt(row, 4).toString());
-        view.txtSoLuongHong.setText(view.tableSp.getValueAt(row, 5).toString());
+        view.cboCategory.setSelectedItem(view.tableSp.getValueAt(row, 2).toString());
+        view.txtSoLuongTot.setText(view.tableSp.getValueAt(row, 3).toString());
+        view.txtSoLuongHong.setText(view.tableSp.getValueAt(row, 4).toString());
+        view.cbotrangthai.setSelectedItem(view.tableSp.getValueAt(row, 5).toString());
     }
 
     public void clearForm() {
@@ -113,11 +120,12 @@ public class qltb_dieukhien {
         view.txtSoLuongHong.setText("");
         view.cboCategory.setSelectedIndex(-1);
         view.cbotrangthai.setSelectedIndex(-1);
+        loadDanhMuc();
+        loadThietBi();
     }
     public void nutchodm(){
-        view.btnNewDm.addActionListener(e -> {                             // Sự kiện khi nhấn nút New
-            // Mở form thêm danh mục mới, truyền 'this' (cửa sổ hiện tại) làm parent
-            new dmtb_view(this).setVisible(true);
+        view.btnNewDm.addActionListener(e -> {                       
+            new dmtb_view(this).setVisible(true); 
         });
         view.btnUpdateDm.addActionListener(e -> {                             // Sự kiện khi nhấn nút New
             dmtb_thuoctinh selected = view.listDanhMuc.getSelectedValue();
@@ -231,7 +239,7 @@ public class qltb_dieukhien {
         }
     }
 
-                private void xoaTB() {
+         private void xoaTB() {
         int row = view.tableSp.getSelectedRow();
         if (row < 0) {
             JOptionPane.showMessageDialog(view, "Chọn thiết bị cần xóa!");
@@ -255,6 +263,49 @@ public class qltb_dieukhien {
             }
         }
     }
+         private void timThietBi() {
+    String key = JOptionPane.showInputDialog(view, "Nhập mã hoặc tên thiết bị");
+
+    // Người dùng bấm Cancel
+    if (key == null) return;
+
+    key = key.trim();
+    if (key.isEmpty()) {
+        JOptionPane.showMessageDialog(view, "Từ khóa không được rỗng!");
+        return;
+    }
+
+    view.tableModelSp.setRowCount(0);
+    qltb_dao dao = new qltb_dao();
+    List<qltb_thuoctinh> ds;
+
+    // Có chọn danh mục → tìm theo danh mục
+    if (maLoaiDangChon != null) {
+        ds = dao.searchma(key, maLoaiDangChon);
+    } 
+    // Không chọn danh mục → tìm toàn bộ
+    else {
+        ds = dao.search(key);
+    }
+
+    if (ds.isEmpty()) {
+        JOptionPane.showMessageDialog(view, "Không tìm thấy thiết bị!");
+        return;
+    }
+
+    for (qltb_thuoctinh tb : ds) {
+        view.tableModelSp.addRow(new Object[]{
+            tb.getMaTB(),
+            tb.getTenTB(),
+            tb.gettenLoai(),
+            tb.gettenTrangThai(),
+            tb.getSoLuongTot(),
+            tb.getSoLuongHong(),
+            tb.getTongSoLuong()
+        });
+    }
+}
+
 
 
     
