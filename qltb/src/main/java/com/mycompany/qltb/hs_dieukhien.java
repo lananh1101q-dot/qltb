@@ -15,11 +15,26 @@ public class hs_dieukhien {
 
     public hs_dieukhien(hs_view view) {
         this.view = view;
-        loadds();
-        click();
+        loadlop();
+        loadhs();
+        click_hs();
     }
     
-    public void loadds(){
+
+        public void loadlop(){
+        view.modelLop.clear();
+        qll_dao  dao= new qll_dao();
+        List<Lop> ds = dao.getAllLop();
+
+        for (Lop l : ds) {
+            view.modelLop.addElement(l);
+            
+        }
+        
+     
+    }
+        
+            public void loadhs(){
         view.modelHocSinh.clear();
         hs_dao  dao= new hs_dao();
         List<hs> ds = dao.getAll();
@@ -32,7 +47,7 @@ public class hs_dieukhien {
      
     }
     
-    public void click(){
+    public void click_hs(){
             view.lstHocSinh.addListSelectionListener(e -> {
         if (!e.getValueIsAdjusting()) {
             hs sv = view.lstHocSinh.getSelectedValue();

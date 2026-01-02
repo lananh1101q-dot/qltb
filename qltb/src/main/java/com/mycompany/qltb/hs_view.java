@@ -8,14 +8,14 @@ import javax.swing.DefaultListModel;
 public class hs_view extends JPanel {
 
     // ===== MODEL =====
-    public DefaultListModel<String> modelLop = new DefaultListModel<>();
+    public DefaultListModel<Lop> modelLop = new DefaultListModel<>();
     public DefaultListModel<hs> modelHocSinh = new DefaultListModel<>();
 
     // ===== COMPONENT =====
     JLabel lblTitle;
 
     JPanel pnlLop;
-    public JList<String> lstLop;
+    public JList<Lop> lstLop;
 
     JPanel pnlDSHS;
     JLabel lblDSHS;

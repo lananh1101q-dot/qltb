@@ -7,11 +7,9 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<<<<<<< HEAD
-        <maven.compiler.release>21</maven.compiler.release>
-=======
+
         <maven.compiler.release>24</maven.compiler.release>
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
+
         <exec.mainClass>com.mycompany.qltb.Qltb</exec.mainClass>
     </properties>
      <dependencies>

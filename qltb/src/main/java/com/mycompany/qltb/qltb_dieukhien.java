@@ -35,7 +35,7 @@ public class qltb_dieukhien {
         // Click bảng thiết bị
         view.tableSp.getSelectionModel().addListSelectionListener(e -> {
             int row = view.tableSp.getSelectedRow();
-            if (row >= 0) showDataFromTable(row);
+            if (row >= 0) hienthi_jtext(row);
         });
 
         // Thêm mới
@@ -104,7 +104,7 @@ public class qltb_dieukhien {
         }
     }
 
-    public void showDataFromTable(int row) {
+    public void hienthi_jtext(int row) {
         view.txtId.setText(view.tableSp.getValueAt(row, 0).toString());
         view.txtName.setText(view.tableSp.getValueAt(row, 1).toString());
         view.cboCategory.setSelectedItem(view.tableSp.getValueAt(row, 2).toString());
