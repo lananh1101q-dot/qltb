@@ -14,12 +14,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
 
-<<<<<<< HEAD
-// SỬA ĐỔI: extends JPanel thay vì JFrame
 public class QuanLyPhong extends JPanel {
-=======
-public class QuanLyPhong extends JFrame {
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
 
     // Components
     private JList<KhuVuc> listKhuVuc;
@@ -35,24 +30,12 @@ public class QuanLyPhong extends JFrame {
     // Các nút quản lý PHÒNG
     private JButton btnThem, btnSua, btnXoa, btnLamMoi; 
     
-<<<<<<< HEAD
     // Các nút quản lý KHU VỰC
     private JButton btnThemKv, btnSuaKv, btnXoaKv;
 
     public QuanLyPhong() {
-        // SỬA ĐỔI: Bỏ các thiết lập của JFrame (setTitle, setSize, v.v.)
-        // Thiết lập layout mặc định cho Panel này
+        // Thiết lập layout mặc định cho Panel
         setLayout(new BorderLayout());
-=======
-    // Các nút quản lý KHU VỰC (MỚI)
-    private JButton btnThemKv, btnSuaKv, btnXoaKv;
-
-    public QuanLyPhong() {
-        setTitle("Quản lý Phòng");
-        setSize(1100, 650);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
 
         initUI();
 
@@ -74,11 +57,7 @@ public class QuanLyPhong extends JFrame {
         pnlLeft.setBorder(new TitledBorder("Danh mục Khu vực"));
         pnlLeft.add(new JScrollPane(listKhuVuc), BorderLayout.CENTER);
 
-<<<<<<< HEAD
         // Nút bấm Khu vực
-=======
-        // Nút bấm Khu vực (MỚI)
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
         JPanel pnlLeftButtons = new JPanel(new FlowLayout());
         btnThemKv = new JButton("Thêm KV");
         btnSuaKv = new JButton("Sửa KV");
@@ -143,18 +122,12 @@ public class QuanLyPhong extends JFrame {
     }
 
     private void addEvents() {
-<<<<<<< HEAD
         // ================= XỬ LÝ SỰ KIỆN KHU VỰC =================
-        btnThemKv.addActionListener(e -> showDialogKhuVuc(null));
-
-=======
-        // ================= XỬ LÝ SỰ KIỆN KHU VỰC (MỚI) =================
 
         // 1. Thêm Khu Vực (Hiện Dialog)
         btnThemKv.addActionListener(e -> showDialogKhuVuc(null));
 
         // 2. Sửa Khu Vực
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
         btnSuaKv.addActionListener(e -> {
             KhuVuc selected = listKhuVuc.getSelectedValue();
             if (selected == null) {
@@ -164,10 +137,7 @@ public class QuanLyPhong extends JFrame {
             showDialogKhuVuc(selected);
         });
 
-<<<<<<< HEAD
-=======
         // 3. Xóa Khu Vực
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
         btnXoaKv.addActionListener(e -> {
             KhuVuc selected = listKhuVuc.getSelectedValue();
             if (selected == null) {
@@ -184,28 +154,22 @@ public class QuanLyPhong extends JFrame {
                     JOptionPane.showMessageDialog(this, "Xóa khu vực thành công!");
                     loadDataToKhuVucList();
                     loadDataToComboBox();
-<<<<<<< HEAD
-                    loadAllPhongToTable();
-=======
                     loadAllPhongToTable(); // Refresh lại bảng phòng
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
                 } else {
                     JOptionPane.showMessageDialog(this, "Xóa thất bại! (Có thể khu vực này đang chứa phòng)");
                 }
             }
         });
 
-<<<<<<< HEAD
         // ================= XỬ LÝ SỰ KIỆN PHÒNG =================
-=======
-        // ================= XỬ LÝ SỰ KIỆN PHÒNG (CODE CŨ) =================
         
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
+        // Sự kiện click vào List Khu Vực -> Lọc danh sách phòng
         listKhuVuc.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 KhuVuc selectedKv = listKhuVuc.getSelectedValue();
                 if (selectedKv != null) {
                     filterPhongByKhuVuc(selectedKv);
+                    // Tự động chọn khu vực tương ứng trong ComboBox
                     for (int i = 0; i < cboKhuVuc.getItemCount(); i++) {
                         if (cboKhuVuc.getItemAt(i).getMaKhuVuc().equals(selectedKv.getMaKhuVuc())) {
                             cboKhuVuc.setSelectedIndex(i); break;
@@ -215,6 +179,7 @@ public class QuanLyPhong extends JFrame {
             }
         });
 
+        // Sự kiện Click bảng phòng -> Đổ dữ liệu lên Form
         tablePhong.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -303,16 +268,11 @@ public class QuanLyPhong extends JFrame {
         });
     }
 
-<<<<<<< HEAD
     private void showDialogKhuVuc(KhuVuc kvEdit) {
-        // Dialog cần parent component, dùng SwingUtilities để tìm Frame chứa Panel này
+        // Vì class này là JPanel, ta cần tìm Window cha để làm parent cho Dialog
         Window parentWindow = SwingUtilities.getWindowAncestor(this);
         JDialog dialog = new JDialog(parentWindow, kvEdit == null ? "Thêm Khu Vực Mới" : "Sửa Khu Vực", Dialog.ModalityType.APPLICATION_MODAL);
-=======
-    // --- HÀM HIỂN THỊ DIALOG THÊM/SỬA KHU VỰC ---
-    private void showDialogKhuVuc(KhuVuc kvEdit) {
-        JDialog dialog = new JDialog(this, kvEdit == null ? "Thêm Khu Vực Mới" : "Sửa Khu Vực", true);
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
+        
         dialog.setSize(350, 200);
         dialog.setLocationRelativeTo(this);
         dialog.setLayout(new GridLayout(3, 2, 10, 10));
@@ -330,17 +290,6 @@ public class QuanLyPhong extends JFrame {
         JPanel pBtn = new JPanel();
         pBtn.add(btnSave); pBtn.add(btnCancel);
         
-<<<<<<< HEAD
-        dialog.add(new JLabel("")); 
-        dialog.add(pBtn);
-
-        if (kvEdit != null) {
-            txtMaKV.setText(kvEdit.getMaKhuVuc());
-            txtTenKV.setText(kvEdit.getTenKhuVuc());
-            txtMaKV.setEditable(false);
-        }
-
-=======
         dialog.add(new JLabel("")); // Placeholder
         dialog.add(pBtn);
 
@@ -352,7 +301,6 @@ public class QuanLyPhong extends JFrame {
         }
 
         // Sự kiện Lưu
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
         btnSave.addActionListener(e -> {
             String ma = txtMaKV.getText().trim();
             String ten = txtTenKV.getText().trim();
@@ -365,32 +313,20 @@ public class QuanLyPhong extends JFrame {
             qlp_dao dao = new qlp_dao();
             boolean success = false;
 
-<<<<<<< HEAD
-            if (kvEdit == null) { 
-=======
             if (kvEdit == null) { // Thêm mới
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
                 if (dao.isKhuVucExist(ma)) {
                     JOptionPane.showMessageDialog(dialog, "Mã khu vực đã tồn tại!");
                     return;
                 }
                 success = dao.insertKhuVuc(new KhuVuc(ma, ten));
-<<<<<<< HEAD
-            } else { 
-=======
             } else { // Sửa
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
                 success = dao.updateKhuVuc(new KhuVuc(ma, ten));
             }
 
             if (success) {
                 JOptionPane.showMessageDialog(dialog, "Thao tác thành công!");
-<<<<<<< HEAD
-                dialog.dispose();
-=======
                 dialog.dispose(); // Đóng dialog
                 // Reload lại dữ liệu
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
                 loadDataToKhuVucList();
                 loadDataToComboBox();
             } else {
@@ -398,13 +334,9 @@ public class QuanLyPhong extends JFrame {
             }
         });
 
-<<<<<<< HEAD
-        btnCancel.addActionListener(e -> dialog.dispose());
-=======
         // Sự kiện Hủy
         btnCancel.addActionListener(e -> dialog.dispose());
 
->>>>>>> 69fb1465ae151ccdf97e6a5d67ba35c6f78d86fd
         dialog.setVisible(true);
     }
 

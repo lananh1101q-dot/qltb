@@ -17,6 +17,7 @@ public class trangchu extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+       // setAlwaysOnTop(true);//luon hien thi tren tat ca tap
 
         // 2. TẠO MENU NẰM NGANG (NORTH)
         panelMenuNgang = new JPanel();
@@ -69,7 +70,7 @@ public class trangchu extends JFrame {
         JPanel panelPhieuMuon = taoPanelTam("GIAO DIỆN PHIẾU MƯỢN");
         
         // --- SỬA Ở ĐÂY: Thay thế Panel tạm bằng Class QuanLyPhong ---
-       // QuanLyPhong panelPhong = new QuanLyPhong(); 
+       QuanLyPhong panelPhong = new QuanLyPhong(); 
         QuanLyLop panelLop = new QuanLyLop();
         // -----------------------------------------------------------
         
@@ -86,7 +87,7 @@ public class trangchu extends JFrame {
 
         
         // Thêm panelPhong thực tế vào CardLayout
-//        panelChinh.add(panelPhong, "PHONG");
+        panelChinh.add(panelPhong, "PHONG");
 //        
 //
 //        panelChinh.add(panelPhong, "PHONG");

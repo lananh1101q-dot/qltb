@@ -16,16 +16,17 @@ import java.util.List;
  * @author LanAnh
  */
 public class hs_dao {
-    public boolean insert(hs hs) {
-        String sql = "INSERT INTO hocsinh VALUES (?, ?,?)";
+    public boolean insert(hs h) {
+        String sql = "INSERT INTO hocsinh VALUES (?,?,?)";
         try {
             db database = new db();
             Connection c = database.getConnection();
             PreparedStatement ps = c.prepareStatement(sql);
 
-            ps.setString(1, hs.getMahs());
-            ps.setString(3, hs.getMalop());
-            ps.setString(2, hs.getTenhs());
+            ps.setString(1, h.getMahs());
+            
+            ps.setString(2, h.getTenhs());
+            ps.setString(3, h.getMalop());
 
             return ps.executeUpdate() > 0;
 
@@ -109,7 +110,7 @@ public class hs_dao {
             
             public List<hs> laytheolop(String malop) {
         List<hs> list = new ArrayList<>();
-        String sql = "SELECT s.mahs, s.tenhs, l.tenlop" +
+        String sql = "SELECT s.mahs, s.tenhs, l.tenlop " +
                      "FROM  hocsinh s " +
                      "JOIN lop l ON s.malop = l.malop " +                   
                      "WHERE s.malop = ?";

@@ -12,9 +12,10 @@ public class qltb_dieukhien {
     public qltb_dieukhien(qltb_view view) {
         this.view = view;
         init();
+        
+        loadThietBi();
         loadDanhMuc();
         loadTrangThai();
-        loadThietBi();
         nutchodm();
         
     }
@@ -105,15 +106,35 @@ public class qltb_dieukhien {
     }
 
     public void hienthi_jtext(int row) {
-        view.txtId.setText(view.tableSp.getValueAt(row, 0).toString());
-        view.txtName.setText(view.tableSp.getValueAt(row, 1).toString());
-        view.cboCategory.setSelectedItem(view.tableSp.getValueAt(row, 2).toString());
-        view.txtSoLuongTot.setText(view.tableSp.getValueAt(row, 3).toString());
-        view.txtSoLuongHong.setText(view.tableSp.getValueAt(row, 4).toString());
-        view.cbotrangthai.setSelectedItem(view.tableSp.getValueAt(row, 5).toString());
-    }
+            view.txtId.setEditable(false);  // Chỉ hiển thị, không cho sửa
+            view.txtId.setText(view.tableSp.getValueAt(row, 0).toString());
+            view.txtName.setText(view.tableSp.getValueAt(row, 1).toString());
+
+            String tenCategory = view.tableSp.getValueAt(row, 2).toString();
+            String trangThai = view.tableSp.getValueAt(row, 3).toString();
+
+            // ⭐ combo dm
+            for (int i = 0; i < view.cboCategory.getItemCount(); i++) {
+                if (view.cboCategory.getItemAt(i).toString().equals(tenCategory)) {
+                    view.cboCategory.setSelectedIndex(i);
+                    break;
+                }
+            }
+
+            // ⭐ combo Trạng thái
+            for (int i = 0; i < view.cbotrangthai.getItemCount(); i++) {
+                if (view.cbotrangthai.getItemAt(i).toString().equals(trangThai)) {
+                    view.cbotrangthai.setSelectedIndex(i);
+                    break;
+                }
+            }
+
+            view.txtSoLuongHong.setText(view.tableSp.getValueAt(row, 4).toString());
+            view.txtSoLuongTot.setText(view.tableSp.getValueAt(row, 5).toString());
+}
 
     public void clearForm() {
+        view.txtId.setEditable(true);  // Chỉ hiển thị, không cho sửa
         view.txtId.setText("");
         view.txtName.setText("");
         view.txtSoLuongTot.setText("");
@@ -214,6 +235,7 @@ public class qltb_dieukhien {
         } else {
             JOptionPane.showMessageDialog(view, "Thêm thất bại!");
         }
+        clearForm();
     }
             private void suaTB() {
                 
@@ -237,6 +259,7 @@ public class qltb_dieukhien {
         } else {
             JOptionPane.showMessageDialog(view, "Cập nhật thất bại!");
         }
+        clearForm();
     }
 
          private void xoaTB() {
