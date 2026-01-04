@@ -99,7 +99,7 @@ public class TaoPhieuMuonFrm extends JFrame {
         btnSave = new JButton("LƯU PHIẾU MƯỢN");
         btnSave.setFont(new Font("Arial", Font.BOLD, 14));
         btnSave.setBackground(new Color(50, 205, 50));
-        btnSave.setForeground(Color.WHITE);
+        btnSave.setForeground(Color.DARK_GRAY);
         btnCancel = new JButton("Hủy bỏ");
 
         pBottom.add(btnSave);

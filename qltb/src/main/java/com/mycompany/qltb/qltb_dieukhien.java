@@ -129,8 +129,8 @@ public class qltb_dieukhien {
                 }
             }
 
-            view.txtSoLuongHong.setText(view.tableSp.getValueAt(row, 4).toString());
-            view.txtSoLuongTot.setText(view.tableSp.getValueAt(row, 5).toString());
+            view.txtSoLuongTot.setText(view.tableSp.getValueAt(row, 4).toString());
+            view.txtSoLuongHong.setText(view.tableSp.getValueAt(row, 5).toString());
 }
 
     public void clearForm() {

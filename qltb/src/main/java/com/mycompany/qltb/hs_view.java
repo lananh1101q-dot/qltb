@@ -9,6 +9,8 @@ public class hs_view extends JPanel {
 
     // ===== MODEL =====
     public DefaultListModel<Lop> modelLop = new DefaultListModel<>();
+   
+
     public DefaultListModel<hs> modelHocSinh = new DefaultListModel<>();
 
     // ===== COMPONENT =====
@@ -24,7 +26,8 @@ public class hs_view extends JPanel {
     JPanel pnlForm;
     JLabel lblMaHS, lblTenHS, lblLop;
     public JTextField txtmahs, txttenhs;
-    public JComboBox cbolop;
+    public JComboBox<Lop> cbolop;
+
 
     JPanel pnlButton;
     public JButton btnthem, btnsua, btnxoa, btnlamsach;
@@ -134,6 +137,7 @@ public class hs_view extends JPanel {
     private void setInputFont(JComponent c) {
         c.setFont(new Font("Tahoma", Font.PLAIN, 15));
     }
+    
 
 
 }

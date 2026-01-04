@@ -16,7 +16,8 @@ public class TraPhieuDialog extends JDialog {
     private QuanLyPhieuMuon parent;
 
     public TraPhieuDialog(QuanLyPhieuMuon parent, int maPM) {
-        super(parent, "CHI TIẾT TRẢ THIẾT BỊ - Phiếu " + maPM, true);
+        super(SwingUtilities.getWindowAncestor(parent), "CHI TIẾT TRẢ THIẾT BỊ - Phiếu " + maPM, ModalityType.APPLICATION_MODAL);
+    
         this.parent = parent;
         this.maPM = maPM;
         setSize(800, 500);
@@ -50,11 +51,12 @@ public class TraPhieuDialog extends JDialog {
         JPanel pBottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnLuu = new JButton("HOÀN TẤT TRẢ");
         btnLuu.setBackground(new Color(0, 153, 76));
-        btnLuu.setForeground(Color.WHITE);
+        btnLuu.setForeground(Color.DARK_GRAY);
         btnLuu.setFont(new Font("Arial", Font.BOLD, 12));
         
         btnHuy = new JButton("Hủy");
-
+        btnHuy.setForeground(Color.DARK_GRAY); // Chữ màu xám đậm
+        btnHuy.setFont(new Font("Arial", Font.BOLD, 12));
         pBottom.add(btnLuu);
         pBottom.add(btnHuy);
         add(pBottom, BorderLayout.SOUTH);

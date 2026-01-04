@@ -29,7 +29,7 @@ public class trangchu extends JFrame {
         JButton btnHome = taoNutMenu("Trang Chủ");
         JButton btnQLTB = taoNutMenu("Quản Lý Thiết Bị");
         JButton btnQLHS = taoNutMenu("Quản Lý HS Mượn");
-        JButton btnPhieuMuon = taoNutMenu("Phiếu Mượn ▾");
+        JButton btnPhieuMuon = taoNutMenu("Phiếu Mượn ");
         JButton btnPhong = taoNutMenu("Quản Lý Phòng");
         JButton btnLop = taoNutMenu("Quản Lý Lớp");
 
@@ -48,9 +48,9 @@ public class trangchu extends JFrame {
         // 3. TẠO MENU CON CHO PHIẾU MƯỢN
         JPopupMenu menuConPhieuMuon = new JPopupMenu();
         JMenuItem itemXemDS = new JMenuItem("Xem danh sách phiếu");
-        JMenuItem itemXuatPhieu = new JMenuItem("Xuất phiếu mượn");
+        
         menuConPhieuMuon.add(itemXemDS);
-        menuConPhieuMuon.add(itemXuatPhieu);
+       
 
         // 4. CẤU HÌNH CARDLAYOUT
         cardLayout = new CardLayout();
@@ -67,7 +67,7 @@ public class trangchu extends JFrame {
         // Các trang bổ sung
             hs_view panelQLHS = new hs_view(); 
         new hs_dieukhien(panelQLHS);
-        JPanel panelPhieuMuon = taoPanelTam("GIAO DIỆN PHIẾU MƯỢN");
+        QuanLyPhieuMuon panelPhieuMuon = new QuanLyPhieuMuon(viewQLTB);
         
         // --- SỬA Ở ĐÂY: Thay thế Panel tạm bằng Class QuanLyPhong ---
        QuanLyPhong panelPhong = new QuanLyPhong(); 
@@ -98,14 +98,15 @@ public class trangchu extends JFrame {
 
         // 5. XỬ LÝ SỰ KIỆN
         btnHome.addActionListener(e -> cardLayout.show(panelChinh, "HOME"));
-        btnQLTB.addActionListener(e -> cardLayout.show(panelChinh, "QLTB"));
+        btnQLTB.addActionListener(e -> cardLayout.show(panelChinh, "QLTB")
+        );
         btnQLHS.addActionListener(e -> cardLayout.show(panelChinh, "QLHS"));
         
         btnPhieuMuon.addActionListener(e -> {
-            menuConPhieuMuon.show(btnPhieuMuon, 0, btnPhieuMuon.getHeight());
+            cardLayout.show(panelChinh, "PHIEUMUON");
         });
-        itemXemDS.addActionListener(e -> cardLayout.show(panelChinh, "PHIEUMUON"));
-        itemXuatPhieu.addActionListener(e -> JOptionPane.showMessageDialog(this, "Đang xuất phiếu..."));
+       
+       
 
 
         // Sự kiện chuyển tab Quản Lý Phòng
