@@ -94,7 +94,7 @@ public class hs_dao {
 public List<hs> getAll() {
     List<hs> list = new ArrayList<>();
     // Lấy h.malop thay vì l.tenlop để phục vụ logic tìm kiếm trong ComboBox
-    String sql = "SELECT mahs, tenhs, malop FROM hocsinh"; 
+    String sql = "SELECT mahs, tenhs, malop FROM hocsinh order by tenhs asc"; 
 
     try {
         db database = new db();
@@ -120,7 +120,7 @@ public List<hs> getAll() {
         String sql = "SELECT s.mahs, s.tenhs, l.tenlop " +
                      "FROM  hocsinh s " +
                      "JOIN lop l ON s.malop = l.malop " +                   
-                     "WHERE s.malop = ?";
+                     "WHERE s.malop = ? order by s.tenhs asc ";
 
         try (Connection c = new db().getConnection(); 
                 PreparedStatement ps = c.prepareStatement(sql)) {

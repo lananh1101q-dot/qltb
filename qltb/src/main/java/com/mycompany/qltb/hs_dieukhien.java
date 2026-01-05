@@ -76,22 +76,46 @@ public class hs_dieukhien {
     view.lstLop.addListSelectionListener(e -> {
         if (e.getValueIsAdjusting() || isSyncing) return;
 
-        Lop l = view.lstLop.getSelectedValue();
-        if (l == null) return;
-
-        maLopDangChon = l.getMaLop();
-        
-        // Load lại danh sách học sinh theo lớp
-        view.modelHocSinh.clear();
-        new hs_dao().laytheolop(maLopDangChon).forEach(view.modelHocSinh::addElement);
-        
-        // Reset form nhập liệu
-        view.txtmahs.setText("");
-        view.txttenhs.setText("");
-        view.cbolop.setSelectedItem(l); // Tự động chọn lớp này trong combo luôn
+    Lop l = view.lstLop.getSelectedValue();
+    loadHocSinhTheoLop(l);
         
     });
 }
+    
+    public void loadHocSinhTheoLop(Lop l) {
+    if (l == null) return;
+
+    maLopDangChon = l.getMaLop();
+
+    // Load lại danh sách học sinh theo lớp
+    view.modelHocSinh.clear();
+    new hs_dao()
+            .laytheolop(maLopDangChon)
+            .forEach(view.modelHocSinh::addElement);
+
+    // Reset form nhập liệu
+    view.txtmahs.setText("");
+    view.txttenhs.setText("");
+    view.cbolop.setSelectedItem(l); // đồng bộ combobox
+}
+    public void reloadHocSinhSauThaoTac() {
+    view.modelHocSinh.clear();
+
+    hs_dao dao = new hs_dao();
+
+    // Nếu đang chọn lớp → load theo lớp
+    if (maLopDangChon != null) {
+        dao.laytheolop(maLopDangChon)
+           .forEach(view.modelHocSinh::addElement);
+    } 
+    // Ngược lại → load toàn trường
+    else {
+        dao.getAll()
+           .forEach(view.modelHocSinh::addElement);
+    }
+}
+
+
     public void nutbam() {
         // Nút làm sạch: Trở về trạng thái hiện Toàn trường
         view.btnlamsach.addActionListener(e -> {
@@ -100,8 +124,10 @@ public class hs_dieukhien {
             view.txttenhs.setText("");
             view.cbolop.setSelectedIndex(-1);
             view.lstLop.clearSelection();
+             maLopDangChon = null; // ⭐ CỰC KỲ QUAN TRỌNG
             loadhs(); // Hiển thị lại học sinh toàn trường
             loadl();
+            
         });
 
         // Nút sửa (Cần cập nhật cả mã lớp nếu người dùng chọn combo khác)
@@ -118,7 +144,7 @@ public class hs_dieukhien {
 
             if (new hs_dao().update(h)) {
                 JOptionPane.showMessageDialog(view, "Sửa thành công!");
-                loadhs(); // Load lại để cập nhật danh sách
+                reloadHocSinhSauThaoTac(); // Load lại để cập nhật danh sách
             }
         });
 
@@ -159,7 +185,7 @@ public class hs_dieukhien {
                         "Lỗi",
                         JOptionPane.ERROR_MESSAGE);
             }
-            loadhs();
+            reloadHocSinhSauThaoTac();
         });
         
         view.btnxoa.addActionListener(e -> {
@@ -182,7 +208,7 @@ public class hs_dieukhien {
                     daohs.delete(h.getMahs());
 
                     view.modelHocSinh.clear();
-                   loadhs();
+                   reloadHocSinhSauThaoTac();
                 }
             });
     

@@ -68,6 +68,10 @@ public class dmtb_view extends JFrame {
                         JOptionPane.WARNING_MESSAGE);
                 return;
             }
+            if (dao.isExist(ma)) {
+            JOptionPane.showMessageDialog(this, "Mã danh mục đã tồn tại!");
+            return;
+        }
 
             boolean result = dao.insert(new dmtb_thuoctinh(ma, ten));
 
