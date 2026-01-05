@@ -117,7 +117,7 @@ public class hs_view extends JPanel {
         btnthem = new JButton("Thêm");
         btnsua = new JButton("Sửa");
         btnxoa = new JButton("Xóa");
-        btnlamsach = new JButton("Làm sạch");
+        btnlamsach = new JButton("Làm mới");
 
      
 

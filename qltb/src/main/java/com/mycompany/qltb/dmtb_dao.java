@@ -80,7 +80,7 @@ public class dmtb_dao {
     // =========================
     public List<dmtb_thuoctinh> getAll() {
         List<dmtb_thuoctinh> list = new ArrayList<>();
-        String sql = "SELECT * FROM loaitb";
+        String sql = "SELECT * FROM loaitb order by tenloai asc";
 
         try {
             db database = new db();

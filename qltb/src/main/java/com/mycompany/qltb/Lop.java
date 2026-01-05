@@ -1,5 +1,7 @@
 package com.mycompany.qltb;
 
+import java.util.Objects;
+
 public class Lop {
     private String maLop;
     private String tenLop;
@@ -42,4 +44,15 @@ public class Lop {
     public String toString() {
         return tenLop; // Dùng để hiển thị trên ComboBox nếu cần
     }
+ @Override
+public boolean equals(Object obj) {
+    if (obj instanceof Lop) {
+        Lop other = (Lop) obj;
+        return this.maLop != null && other.maLop != null 
+               && this.maLop.trim().equals(other.maLop.trim());
+    }
+    return false;
+}
+
+
 }

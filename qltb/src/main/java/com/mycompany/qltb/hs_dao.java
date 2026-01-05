@@ -16,6 +16,15 @@ import java.util.List;
  * @author LanAnh
  */
 public class hs_dao {
+        public boolean isExist(String maTB) {
+        String sql = "SELECT mahs FROM hocsinh WHERE mahs = ?";
+        try (Connection c = new db().getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, maTB);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) { e.printStackTrace(); }
+        return false;
+    }
     public boolean insert(hs h) {
         String sql = "INSERT INTO hocsinh VALUES (?,?,?)";
         try {
@@ -81,32 +90,30 @@ public class hs_dao {
     // =========================
     // LẤY DANH SÁCH
     // =========================
-            public List<hs> getAll() {
-            List<hs> list = new ArrayList<>();
+           // Trong hàm getAll()
+public List<hs> getAll() {
+    List<hs> list = new ArrayList<>();
+    // Lấy h.malop thay vì l.tenlop để phục vụ logic tìm kiếm trong ComboBox
+    String sql = "SELECT mahs, tenhs, malop FROM hocsinh"; 
 
-            String sql = "SELECT h.mahs, h.tenhs, l.tenlop "
-                       + "FROM hocsinh h "
-                       + "JOIN lop l ON h.malop = l.malop";
+    try {
+        db database = new db();
+        Connection c = database.getConnection();
+        Statement st = c.createStatement();
+        ResultSet rs = st.executeQuery(sql);
 
-            try {
-                db database = new db();
-                Connection c = database.getConnection();
-                Statement st = c.createStatement();
-                ResultSet rs = st.executeQuery(sql);
-
-                while (rs.next()) {
-                    list.add(new hs(
-                        rs.getString("mahs"),
-                        rs.getString("tenhs"),
-                        rs.getString("tenlop")
-                    ));
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return list;
+        while (rs.next()) {
+            list.add(new hs(
+                rs.getString("mahs"),
+                rs.getString("tenhs"),
+                rs.getString("malop") // Đây phải là MÃ (vd: L01), không phải TÊN (vd: 10A1)
+            ));
         }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
             
             public List<hs> laytheolop(String malop) {
         List<hs> list = new ArrayList<>();
